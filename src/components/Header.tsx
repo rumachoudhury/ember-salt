@@ -8,6 +8,7 @@ const links = [
   { href: "/", label: "Home" },
   { href: "/menu", label: "Menu" },
   { href: "/reservations", label: "Reservations" },
+  { href: "/admin", label: "Admin" },
 ];
 
 export default function Header() {

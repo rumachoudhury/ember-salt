@@ -171,6 +171,20 @@ section { scroll-margin-top: 90px; }
 .info-card .contact-line a { color: var(--ember-2); text-decoration: none; }
 .info-card .contact-line a:hover { text-decoration: underline; }
 
+.admin-shell { padding-block: clamp(3rem, 7vw, 5rem); }
+.admin-header { margin-bottom: 1.75rem; }
+.admin-header h1 { font-size: clamp(2.2rem, 5vw, 3rem); }
+.admin-card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: clamp(1.3rem, 3vw, 2rem); }
+.admin-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+.admin-toolbar h2 { font-size: 1.4rem; }
+.badge { display: inline-flex; padding: .45rem .8rem; border-radius: 999px; background: rgba(228, 112, 46, .12); border: 1px solid rgba(228, 112, 46, .3); color: var(--ember-2); font-size: .8rem; font-weight: 600; }
+.table-wrap { overflow-x: auto; }
+.admin-card table { width: 100%; border-collapse: collapse; min-width: 760px; }
+.admin-card th, .admin-card td { padding: .9rem .8rem; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+.admin-card th { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.admin-card td { color: var(--ink); }
+.empty-state { border: 1px dashed var(--line); border-radius: 14px; padding: 2rem; text-align: center; color: var(--muted); }
+
 footer.site-footer { border-top: 1px solid var(--line); padding-block: 2.5rem; }
 .foot-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; align-items: center; font-size: .9rem; color: var(--muted); }
 .foot-row a { color: var(--ember-2); text-decoration: none; }

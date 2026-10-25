@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import { site } from "@/data/site";
+import { readReservations, saveReservation } from "@/lib/reservationStore";
 
 export const runtime = "nodejs";
 
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+export async function GET() {
+  const reservations = await readReservations();
+  return NextResponse.json({ reservations }, { status: 200 });
 }
 
 export async function POST(request: Request) {
@@ -18,38 +20,16 @@ export async function POST(request: Request) {
       notes?: string;
     }>;
 
-    const name = String(data.name ?? "").trim();
-    const email = String(data.email ?? "").trim();
-    const date = String(data.date ?? "").trim();
-    const time = String(data.time ?? "").trim();
-    const party = Number(data.party ?? 0);
-    const notes = String(data.notes ?? "").trim();
+    const saved = await saveReservation(data);
 
-    if (!name || !email || !date || !time || !party) {
+    if (!saved.valid) {
       return NextResponse.json(
-        { error: "Please provide your name, email, date, time, and party size." },
+        { error: saved.errors[0] ?? "Please provide a valid reservation request." },
         { status: 400 }
       );
     }
 
-    if (!isValidEmail(email)) {
-      return NextResponse.json({ error: "Please provide a valid email address." }, { status: 400 });
-    }
-
-    if (Number.isNaN(party) || party < 1 || party > 12) {
-      return NextResponse.json({ error: "Party size must be between 1 and 12 guests." }, { status: 400 });
-    }
-
-    const reservation = {
-      name,
-      email,
-      date,
-      time,
-      party,
-      notes,
-      receivedAt: new Date().toISOString(),
-    };
-
+    const reservation = saved.reservation;
     const smtpHost = process.env.SMTP_HOST;
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
@@ -69,8 +49,8 @@ export async function POST(request: Request) {
       await transporter.sendMail({
         from: process.env.RESERVATION_FROM ?? `"${site.name}" <${smtpUser}>`,
         to: process.env.RESERVATION_EMAIL ?? process.env.NEXT_PUBLIC_RESERVATION_EMAIL ?? "hello@emberandsalt.com",
-        subject: `Reservation request: ${name} (${party} guests)`,
-        text: `New reservation request\n\nName: ${name}\nEmail: ${email}\nDate: ${date}\nTime: ${time}\nParty size: ${party}\nNotes: ${notes || "None"}`,
+        subject: `Reservation request: ${reservation.name} (${reservation.party} guests)`,
+        text: `New reservation request\n\nName: ${reservation.name}\nEmail: ${reservation.email}\nDate: ${reservation.date}\nTime: ${reservation.time}\nParty size: ${reservation.party}\nNotes: ${reservation.notes || "None"}`,
       });
     } else {
       console.info("Reservation request received:", reservation);
@@ -79,7 +59,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         success: true,
-        message: `Thanks, ${name.split(" ")[0]} — your reservation request has been received. We'll confirm by email shortly.`,
+        message: `Thanks, ${reservation.name.split(" ")[0]} — your reservation request has been received. We'll confirm by email shortly.`,
       },
       { status: 200 }
     );
