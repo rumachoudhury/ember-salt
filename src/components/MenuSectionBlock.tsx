@@ -11,6 +11,7 @@ export default function MenuSectionBlock({ section }: { section: MenuSection }) 
       <div className="menu-list">
         {section.dishes.map((dish, i) => (
           <Reveal as="div" className="menu-row" delay={i % 5} key={dish.name}>
+            <img className="menu-photo" src={dish.image} alt={dish.name} loading="lazy" />
             <div className="left">
               <div className="name-line">
                 <h3>{dish.name}</h3>
