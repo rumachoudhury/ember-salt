@@ -5,13 +5,45 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { site } from "@/data/site";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://emberandsalt.com";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: `${site.name} — ${site.tagline}`,
   description: site.description,
+  keywords: [
+    "restaurant",
+    "wood-fired dining",
+    "American cuisine",
+    "New York restaurant",
+    "date night",
+  ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
+    url: siteUrl,
+    siteName: site.name,
     type: "website",
+    locale: "en_US",
+    images: [
+      {
+        url: "/icon.svg",
+        width: 512,
+        height: 512,
+        alt: `${site.name} logo`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
+  },
+  icons: {
+    icon: "/icon.svg",
   },
 };
 
