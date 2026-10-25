@@ -2,35 +2,64 @@
 
 import { useRef, useState, type FormEvent } from "react";
 
-/**
- * Demo-only form: validates and shows a confirmation message, but doesn't send
- * the booking anywhere yet. Wire the onSubmit handler up to a booking provider
- * (Tock, OpenTable, Resy, or your own API route) when you're ready to take real
- * reservations.
- */
 export default function ReservationForm() {
   const [status, setStatus] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const today = new Date().toISOString().slice(0, 10);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const name = (form.elements.namedItem("name") as HTMLInputElement).value.trim();
-    const date = (form.elements.namedItem("date") as HTMLInputElement).value;
-    const time = (form.elements.namedItem("time") as HTMLSelectElement).value;
-    const party = (form.elements.namedItem("party") as HTMLSelectElement).value;
+    const formData = new FormData(form);
 
-    const ok = Boolean(name && date && time && party);
-    setStatus(
-      ok
-        ? `Thanks, ${name.split(" ")[0]} — we've noted a table for ${party} on ${date} at ${time}. We'll confirm by email shortly.`
-        : "Please fill in your name, date, time and party size."
-    );
-    if (ok) form.reset();
-    if (timer.current) clearTimeout(timer.current);
-    timer.current = setTimeout(() => setStatus(""), 7000);
+    const payload = {
+      name: String(formData.get("name") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      date: String(formData.get("date") ?? "").trim(),
+      time: String(formData.get("time") ?? "").trim(),
+      party: Number(formData.get("party") ?? 0),
+      notes: String(formData.get("notes") ?? "").trim(),
+    };
+
+    if (!payload.name || !payload.email || !payload.date || !payload.time || !payload.party) {
+      setStatus("Please fill in your name, email, date, time and party size.");
+      if (timer.current) clearTimeout(timer.current);
+      timer.current = setTimeout(() => setStatus(""), 7000);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setStatus("Sending your reservation request...");
+
+    try {
+      const response = await fetch("/api/reservations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = (await response.json()) as { error?: string; message?: string };
+
+      if (!response.ok) {
+        throw new Error(result.error ?? "Unable to send reservation request.");
+      }
+
+      setStatus(
+        result.message ?? `Thanks, ${payload.name.split(" ")[0]} — your request for ${payload.party} on ${payload.date} at ${payload.time} is on the list.`
+      );
+      form.reset();
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Something went wrong.";
+      setStatus(message);
+    } finally {
+      setIsSubmitting(false);
+      if (timer.current) clearTimeout(timer.current);
+      timer.current = setTimeout(() => setStatus(""), 7000);
+    }
   };
 
   return (
@@ -84,7 +113,9 @@ export default function ReservationForm() {
         <textarea id="notes" name="notes" rows={3} placeholder="Allergies, special occasion, seating preference..." />
       </div>
 
-      <button className="btn primary" type="submit">Request reservation</button>
+      <button className="btn primary" type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "Sending..." : "Request reservation"}
+      </button>
       <p className="res-status" role="status" aria-live="polite">{status}</p>
     </form>
   );
