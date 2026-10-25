@@ -18,7 +18,7 @@ export const menu: MenuSection[] = [
     id: "starters",
     title: "To start",
     dishes: [
-      { name: "Charred flatbread", description: "Hearth-baked, whipped cultured butter, smoked salt", price: "$12", image: "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&w=900&q=82" },
+      { name: "Charred flatbread", description: "Hearth-baked, whipped cultured butter, smoked salt", price: "$12", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=82" },
       { name: "Embered oysters", description: "Half shell, finished over coals, brown butter mignonette", price: "$22", image: "https://images.unsplash.com/photo-1579684947550-22e945225d9a?auto=format&fit=crop&w=900&q=82", tag: "signature" },
       { name: "Burnt carrot soup", description: "Brown butter, toasted seeds, crème fraîche", price: "$14", image: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=82", tag: "veg" },
       { name: "Hearth bread & lardo", description: "Daily loaf, cured lardo, sea salt", price: "$10", image: "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=900&q=82" },
