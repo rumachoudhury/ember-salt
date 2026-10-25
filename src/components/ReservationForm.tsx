@@ -23,7 +23,13 @@ export default function ReservationForm() {
       notes: String(formData.get("notes") ?? "").trim(),
     };
 
-    if (!payload.name || !payload.email || !payload.date || !payload.time || !payload.party) {
+    if (
+      !payload.name ||
+      !payload.email ||
+      !payload.date ||
+      !payload.time ||
+      !payload.party
+    ) {
       setStatus("Please fill in your name, email, date, time and party size.");
       if (timer.current) clearTimeout(timer.current);
       timer.current = setTimeout(() => setStatus(""), 7000);
@@ -42,18 +48,23 @@ export default function ReservationForm() {
         body: JSON.stringify(payload),
       });
 
-      const result = (await response.json()) as { error?: string; message?: string };
+      const result = (await response.json()) as {
+        error?: string;
+        message?: string;
+      };
 
       if (!response.ok) {
         throw new Error(result.error ?? "Unable to send reservation request.");
       }
 
       setStatus(
-        result.message ?? `Thanks, ${payload.name.split(" ")[0]} — your request for ${payload.party} on ${payload.date} at ${payload.time} is on the list.`
+        result.message ??
+          `Thanks, ${payload.name.split(" ")[0]} — your request for ${payload.party} on ${payload.date} at ${payload.time} is on the list.`,
       );
       form.reset();
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Something went wrong.";
+      const message =
+        error instanceof Error ? error.message : "Something went wrong.";
       setStatus(message);
     } finally {
       setIsSubmitting(false);
@@ -65,16 +76,31 @@ export default function ReservationForm() {
   return (
     <form className="res-form" onSubmit={onSubmit}>
       <h2>Request a table</h2>
-      <p className="sub">We&apos;ll confirm by email within a few hours. For parties over 8, call us directly.</p>
+      <p className="sub">
+        We&apos;ll confirm by email within a few hours. For parties over 8, call
+        us directly.
+      </p>
 
       <div className="field">
         <label htmlFor="name">Full name</label>
-        <input id="name" name="name" type="text" placeholder="Jordan Lee" required />
+        <input
+          id="name"
+          name="name"
+          type="text"
+          placeholder="Jordan Lee"
+          required
+        />
       </div>
 
       <div className="field">
         <label htmlFor="email">Email</label>
-        <input id="email" name="email" type="email" placeholder="you@email.com" required />
+        <input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="you@email.com"
+          required
+        />
       </div>
 
       <div className="field-row">
@@ -85,7 +111,9 @@ export default function ReservationForm() {
         <div className="field">
           <label htmlFor="time">Time</label>
           <select id="time" name="time" required defaultValue="">
-            <option value="" disabled>Select</option>
+            <option value="" disabled>
+              Select
+            </option>
             <option>5:30 PM</option>
             <option>6:00 PM</option>
             <option>6:30 PM</option>
@@ -101,22 +129,33 @@ export default function ReservationForm() {
       <div className="field">
         <label htmlFor="party">Party size</label>
         <select id="party" name="party" required defaultValue="">
-          <option value="" disabled>Select</option>
+          <option value="" disabled>
+            Select
+          </option>
           {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-            <option key={n} value={n}>{n} {n === 1 ? "guest" : "guests"}</option>
+            <option key={n} value={n}>
+              {n} {n === 1 ? "guest" : "guests"}
+            </option>
           ))}
         </select>
       </div>
 
       <div className="field">
         <label htmlFor="notes">Notes (optional)</label>
-        <textarea id="notes" name="notes" rows={3} placeholder="Allergies, special occasion, seating preference..." />
+        <textarea
+          id="notes"
+          name="notes"
+          rows={3}
+          placeholder="Allergies, special occasion, seating preference..."
+        />
       </div>
 
       <button className="btn primary" type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Sending..." : "Request reservation"}
       </button>
-      <p className="res-status" role="status" aria-live="polite">{status}</p>
+      <p className="res-status" role="status" aria-live="polite">
+        {status}
+      </p>
     </form>
   );
 }

@@ -38,7 +38,9 @@ async function ensureStoreFile() {
   }
 }
 
-export function normalizeReservation(input: ReservationInput): ReservationResult {
+export function normalizeReservation(
+  input: ReservationInput,
+): ReservationResult {
   const errors: string[] = [];
 
   const name = String(input.name ?? "").trim();
@@ -49,7 +51,8 @@ export function normalizeReservation(input: ReservationInput): ReservationResult
   const partyValue = Number(input.party ?? 0);
 
   if (!name) errors.push("Name is required.");
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push("Please provide a valid email address.");
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    errors.push("Please provide a valid email address.");
   if (!date) errors.push("Date is required.");
   if (!time) errors.push("Reservation time is required.");
   if (!Number.isFinite(partyValue) || partyValue < 1 || partyValue > 12) {
@@ -83,7 +86,10 @@ export async function readReservations(): Promise<ReservationEntry[]> {
     const parsed = JSON.parse(content) as unknown;
     if (!Array.isArray(parsed)) return [];
 
-    return parsed.filter((item): item is ReservationEntry => Boolean(item) && typeof item === "object");
+    return parsed.filter(
+      (item): item is ReservationEntry =>
+        Boolean(item) && typeof item === "object",
+    );
   } catch {
     return [];
   }
@@ -100,7 +106,11 @@ export async function saveReservation(input: ReservationInput) {
   const reservations = await readReservations();
   reservations.unshift(normalized);
 
-  await fs.writeFile(RESERVATIONS_FILE, `${JSON.stringify(reservations, null, 2)}\n`, "utf8");
+  await fs.writeFile(
+    RESERVATIONS_FILE,
+    `${JSON.stringify(reservations, null, 2)}\n`,
+    "utf8",
+  );
 
   return { valid: true, reservation: normalized } as const;
 }

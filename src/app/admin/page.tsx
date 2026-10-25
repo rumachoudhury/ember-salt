@@ -13,7 +13,9 @@ export default async function AdminPage() {
     <main id="main" className="wrap admin-shell">
       <div className="admin-header">
         <div>
-          <p className="kicker"><i /> Admin</p>
+          <p className="kicker">
+            <i /> Admin
+          </p>
           <h1>Reservation dashboard</h1>
         </div>
       </div>

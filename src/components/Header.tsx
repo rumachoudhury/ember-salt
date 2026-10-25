@@ -18,13 +18,19 @@ export default function Header() {
       <div className="wrap bar">
         <Link className="brand" href="/">
           <span className="mark">
-            <svg viewBox="0 0 24 24"><path d="M12 2c3 4 5 6 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-5 .5 2 1.5 2.5 2 1.5-.5-2 0-4.5 1-6.5z" /></svg>
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2c3 4 5 6 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-5 .5 2 1.5 2.5 2 1.5-.5-2 0-4.5 1-6.5z" />
+            </svg>
           </span>
           <b>{site.name}</b>
         </Link>
         <nav className="hdr-nav" aria-label="Main">
           {links.map((l) => (
-            <Link key={l.href} href={l.href} aria-current={pathname === l.href ? "true" : undefined}>
+            <Link
+              key={l.href}
+              href={l.href}
+              aria-current={pathname === l.href ? "true" : undefined}
+            >
               {l.label}
             </Link>
           ))}

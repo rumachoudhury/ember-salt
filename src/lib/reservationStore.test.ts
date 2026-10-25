@@ -1,7 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { normalizeReservation, type ReservationEntry } from "./reservationStore.ts";
+import {
+  normalizeReservation,
+  type ReservationEntry,
+} from "./reservationStore.ts";
 
 test("normalizeReservation strips invalid values and keeps valid booking details", () => {
   const input = {

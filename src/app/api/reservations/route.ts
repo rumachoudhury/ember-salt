@@ -24,8 +24,11 @@ export async function POST(request: Request) {
 
     if (!saved.valid) {
       return NextResponse.json(
-        { error: saved.errors[0] ?? "Please provide a valid reservation request." },
-        { status: 400 }
+        {
+          error:
+            saved.errors[0] ?? "Please provide a valid reservation request.",
+        },
+        { status: 400 },
       );
     }
 
@@ -48,7 +51,10 @@ export async function POST(request: Request) {
 
       await transporter.sendMail({
         from: process.env.RESERVATION_FROM ?? `"${site.name}" <${smtpUser}>`,
-        to: process.env.RESERVATION_EMAIL ?? process.env.NEXT_PUBLIC_RESERVATION_EMAIL ?? "hello@emberandsalt.com",
+        to:
+          process.env.RESERVATION_EMAIL ??
+          process.env.NEXT_PUBLIC_RESERVATION_EMAIL ??
+          "hello@emberandsalt.com",
         subject: `Reservation request: ${reservation.name} (${reservation.party} guests)`,
         text: `New reservation request\n\nName: ${reservation.name}\nEmail: ${reservation.email}\nDate: ${reservation.date}\nTime: ${reservation.time}\nParty size: ${reservation.party}\nNotes: ${reservation.notes || "None"}`,
       });
@@ -61,13 +67,13 @@ export async function POST(request: Request) {
         success: true,
         message: `Thanks, ${reservation.name.split(" ")[0]} — your reservation request has been received. We'll confirm by email shortly.`,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Reservation submission failed:", error);
     return NextResponse.json(
       { error: "Reservation submission failed. Please try again." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
