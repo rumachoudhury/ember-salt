@@ -32,6 +32,10 @@ export default function AboutStrip() {
         </Reveal>
         <Reveal delay={1}>
           <div className="flame-art">
+            <img
+              src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80"
+              alt="Warm restaurant dining scene with a decorated table"
+            />
             <span className="glow" aria-hidden="true" />
           </div>
         </Reveal>

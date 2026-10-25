@@ -1,8 +1,8 @@
 export const site = {
   name: "Ember & Salt",
-  tagline: "Wood-fired, downtown.",
+  tagline: "Fire, flavor, and candlelight.",
   description:
-    "Modern American cooking over an open hearth — live-fire mains, a short seasonal menu, and a dining room built around the fire itself.",
+    "Modern American cooking over an open hearth — refined seasonal plates, warm hospitality, and an intimate dining room designed for slow evenings.",
   phone: "(212) 555-0148",
   email: "hello@emberandsalt.com",
   address: "214 Foundry Lane, Lower Mills",
