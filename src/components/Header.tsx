@@ -14,28 +14,29 @@ const links = [
 export default function Header() {
   const pathname = usePathname();
   return (
-    <header className="site-header">
-      <div className="wrap bar">
-        <Link className="brand" href="/">
-          <span className="mark">
-            <svg viewBox="0 0 24 24">
+    <header className="sticky top-0 z-30 border-b border-line bg-bg/85 backdrop-blur-[10px]">
+      <div className="mx-auto flex h-[78px] max-w-[1120px] items-center justify-between gap-4 px-[clamp(1.25rem,5vw,3rem)]">
+        <Link className="flex items-center gap-[0.65rem] no-underline" href="/">
+          <span className="grid size-9 place-items-center rounded-[9px] bg-gradient-to-br from-ember-2 to-ember">
+            <svg className="size-[18px] fill-[var(--on-ember)]" viewBox="0 0 24 24">
               <path d="M12 2c3 4 5 6 5 10a5 5 0 0 1-10 0c0-2 1-3.5 2-5 .5 2 1.5 2.5 2 1.5-.5-2 0-4.5 1-6.5z" />
             </svg>
           </span>
-          <b>{site.name}</b>
+          <b className="font-serif text-[1.3rem] font-semibold">{site.name}</b>
         </Link>
-        <nav className="hdr-nav" aria-label="Main">
+        <nav className="hidden gap-8 text-[0.95rem] font-semibold md:flex" aria-label="Main">
           {links.map((l) => (
             <Link
               key={l.href}
               href={l.href}
               aria-current={pathname === l.href ? "true" : undefined}
+              className={`border-b-2 px-0 py-[0.4rem] text-muted no-underline transition-colors hover:border-ember hover:text-ink ${pathname === l.href ? "border-ember text-ink" : "border-transparent"}`}
             >
               {l.label}
             </Link>
           ))}
         </nav>
-        <Link className="btn primary small" href="/reservations">
+        <Link className="inline-flex items-center justify-center gap-2 rounded-full border border-transparent bg-gradient-to-br from-ember-3 to-ember-2 px-[1.1rem] py-[0.55rem] text-[0.78rem] font-bold tracking-[0.04em] text-[var(--on-ember)] uppercase no-underline shadow-[0_18px_32px_-20px_rgba(220,160,102,0.8)] transition hover:-translate-y-0.5 hover:brightness-105" href="/reservations">
           Reserve a table
         </Link>
       </div>

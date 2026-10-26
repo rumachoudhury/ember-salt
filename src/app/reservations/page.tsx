@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function ReservationsPage() {
   return (
     <main id="main">
-      <div className="wrap res-wrap">
+      <div className="mx-auto grid max-w-[1120px] grid-cols-1 items-start gap-[clamp(2rem,6vw,4rem)] px-[clamp(1.25rem,5vw,3rem)] py-[clamp(3rem,7vw,5rem)] min-[901px]:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)]">
         <Reveal as="div">
           <ReservationForm />
         </Reveal>

@@ -1,6 +1,6 @@
 # Ember & Salt
 
-A restaurant website built with **Next.js (App Router)**, **React** and **TypeScript**.
+A restaurant website built with **Next.js (App Router)**, **React**, **TypeScript** and **Tailwind CSS v4**.
 Modern wood-fired American cooking — three pages: Home, Menu and Reservations.
 
 ## Run it in VS Code
@@ -15,6 +15,10 @@ npm run dev
 ```
 
 4. Open http://localhost:3000. Saved changes reload automatically.
+
+The project uses Tailwind CSS v4. Most component styling lives in `className`
+utilities; `src/app/globals.css` keeps the shared theme tokens and custom hero,
+ember, and reveal effects.
 
 Other commands:
 
@@ -33,7 +37,8 @@ npm run typecheck    # check TypeScript without building
 | Home page sections                       | `src/components/Hero.tsx`, `AboutStrip.tsx`, `Testimonial.tsx`, `CtaBand.tsx` |
 | Signature dishes shown on the home page  | Set `tag: "signature"` on a dish in `src/data/menu.ts` |
 | Reservation form fields/behavior          | `src/components/ReservationForm.tsx`   |
-| Colors, fonts, spacing                   | `src/app/globals.css` (`:root` at top) |
+| Colors and fonts                         | `src/app/globals.css` (theme tokens near the top) |
+| Component layout and spacing             | Tailwind classes in the relevant `.tsx` component |
 
 ### Adding or editing menu items
 

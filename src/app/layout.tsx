@@ -66,7 +66,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
       </head>
       <body>
-        <a className="skip" href="#main">
+        <a className="fixed left-4 -top-16 z-50 bg-ink px-4 py-[0.6rem] font-bold text-bg focus:top-4" href="#main">
           Skip to content
         </a>
         <Header />

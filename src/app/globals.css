@@ -1,3 +1,21 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-ember: var(--ember);
+  --color-ember-2: var(--ember-2);
+  --color-ember-3: var(--ember-3);
+  --font-serif: var(--serif);
+  --font-sans: var(--sans);
+  --ease-brand: var(--ease);
+}
+
 :root {
   --bg: #120d0b;
   --bg-2: #1a120f;
@@ -195,6 +213,11 @@ section {
     linear-gradient(90deg, rgba(18, 13, 11, 0.78), rgba(18, 13, 11, 0.46)),
     url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
   border-bottom: 1px solid var(--line);
+}
+.cta-bg {
+  background:
+    linear-gradient(135deg, rgba(90, 54, 32, 0.9), rgba(20, 15, 13, 0.9)),
+    url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=80") center/cover;
 }
 .hero::before {
   content: "";
@@ -500,7 +523,7 @@ section {
   display: block;
   object-fit: cover;
 }
-.flame-art .glow {
+.glow {
   position: absolute;
   left: 50%;
   bottom: -10%;
