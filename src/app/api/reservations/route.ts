@@ -1,13 +1,8 @@
 import { NextResponse } from "next/server";
 import { site } from "@/data/site";
-import { readReservations, saveReservation } from "@/lib/reservationStore";
+import { saveReservation } from "@/lib/reservationStore";
 
 export const runtime = "nodejs";
-
-export async function GET() {
-  const reservations = await readReservations();
-  return NextResponse.json({ reservations }, { status: 200 });
-}
 
 export async function POST(request: Request) {
   try {
