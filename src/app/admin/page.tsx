@@ -6,6 +6,8 @@ export const metadata = {
   description: "Reservation dashboard for Ember & Salt.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminPage() {
   const reservations = await readReservations();
 

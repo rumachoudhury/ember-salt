@@ -8,11 +8,13 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test": "node --test --experimental-strip-types src/**/*.test.ts"
+    "test": "node --test --experimental-strip-types src/**/*.test.ts",
+    "import:reservations": "node scripts/import-reservations.mjs"
   },
   "dependencies": {
     "next": "^16.3.5",
     "nodemailer": "^10.2.1",
+    "postgres": "^3.4.9",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },

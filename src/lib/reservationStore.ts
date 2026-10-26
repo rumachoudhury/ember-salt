@@ -1,6 +1,5 @@
 import crypto from "node:crypto";
-import { promises as fs } from "node:fs";
-import path from "node:path";
+import postgres from "postgres";
 
 export type ReservationInput = {
   name?: string;
@@ -26,16 +25,30 @@ export type ReservationResult =
   | ({ valid: true } & ReservationEntry)
   | { valid: false; errors: string[] };
 
-const RESERVATIONS_FILE = path.join(process.cwd(), "data", "reservations.json");
+type ReservationRow = Omit<ReservationEntry, "receivedAt"> & {
+  receivedAt: Date | string;
+};
 
-async function ensureStoreFile() {
-  await fs.mkdir(path.dirname(RESERVATIONS_FILE), { recursive: true });
+let database: ReturnType<typeof postgres> | undefined;
 
-  try {
-    await fs.access(RESERVATIONS_FILE);
-  } catch {
-    await fs.writeFile(RESERVATIONS_FILE, "[]\n", "utf8");
+function getDatabase() {
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error("DATABASE_URL must be configured to use reservation storage.");
   }
+
+  database ??= postgres(connectionString, { max: 1, prepare: false });
+  return database;
+}
+
+function toReservationEntry(row: ReservationRow): ReservationEntry {
+  return {
+    ...row,
+    receivedAt:
+      row.receivedAt instanceof Date
+        ? row.receivedAt.toISOString()
+        : new Date(row.receivedAt).toISOString(),
+  };
 }
 
 export function normalizeReservation(
@@ -77,22 +90,22 @@ export function normalizeReservation(
 }
 
 export async function readReservations(): Promise<ReservationEntry[]> {
-  await ensureStoreFile();
+  const sql = getDatabase();
+  const rows = (await sql`
+    SELECT
+      id,
+      name,
+      email,
+      reservation_date AS date,
+      reservation_time AS time,
+      party,
+      notes,
+      received_at AS "receivedAt"
+    FROM reservations
+    ORDER BY received_at DESC
+  `) as unknown as ReservationRow[];
 
-  try {
-    const content = await fs.readFile(RESERVATIONS_FILE, "utf8");
-    if (!content.trim()) return [];
-
-    const parsed = JSON.parse(content) as unknown;
-    if (!Array.isArray(parsed)) return [];
-
-    return parsed.filter(
-      (item): item is ReservationEntry =>
-        Boolean(item) && typeof item === "object",
-    );
-  } catch {
-    return [];
-  }
+  return rows.map(toReservationEntry);
 }
 
 export async function saveReservation(input: ReservationInput) {
@@ -102,15 +115,28 @@ export async function saveReservation(input: ReservationInput) {
     return { valid: false, errors: normalized.errors } as const;
   }
 
-  await ensureStoreFile();
-  const reservations = await readReservations();
-  reservations.unshift(normalized);
-
-  await fs.writeFile(
-    RESERVATIONS_FILE,
-    `${JSON.stringify(reservations, null, 2)}\n`,
-    "utf8",
-  );
+  const sql = getDatabase();
+  await sql`
+    INSERT INTO reservations (
+      id,
+      name,
+      email,
+      reservation_date,
+      reservation_time,
+      party,
+      notes,
+      received_at
+    ) VALUES (
+      ${normalized.id},
+      ${normalized.name},
+      ${normalized.email},
+      ${normalized.date},
+      ${normalized.time},
+      ${normalized.party},
+      ${normalized.notes},
+      ${normalized.receivedAt}
+    )
+  `;
 
   return { valid: true, reservation: normalized } as const;
 }

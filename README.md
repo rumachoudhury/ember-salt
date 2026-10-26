@@ -37,6 +37,7 @@ npm run typecheck    # check TypeScript without building
 | Home page sections                       | `src/components/Hero.tsx`, `AboutStrip.tsx`, `Testimonial.tsx`, `CtaBand.tsx` |
 | Signature dishes shown on the home page  | Set `tag: "signature"` on a dish in `src/data/menu.ts` |
 | Reservation form fields/behavior          | `src/components/ReservationForm.tsx`   |
+| Reservation database schema              | `database/schema.sql`                 |
 | Colors and fonts                         | `src/app/globals.css` (theme tokens near the top) |
 | Component layout and spacing             | Tailwind classes in the relevant `.tsx` component |
 
@@ -50,12 +51,23 @@ Open `src/data/menu.ts`. Each section has an `id`, a `title`, and a `dishes` arr
 
 `tag` is optional: `"signature"` (shown on the home page too), `"new"`, or `"veg"`.
 
-### The reservation form
+### Reservation storage
 
-`src/components/ReservationForm.tsx` validates the fields and shows a confirmation
-message, but doesn't send the booking anywhere yet. Wire its `onSubmit` handler up
-to a real booking provider (Tock, OpenTable, Resy) or your own API route when
-you're ready to take live reservations.
+Reservations are stored in managed PostgreSQL. Create a database with a provider
+such as Neon, Supabase, or a managed Postgres service, then set `DATABASE_URL`
+in `.env.local` and in your deployment environment. Use the provider's pooled
+connection URL for serverless hosting.
+
+Apply the schema in `database/schema.sql` using the provider's SQL editor or a
+PostgreSQL client before accepting bookings. To import existing local bookings
+from `data/reservations.json`, set `DATABASE_URL`, apply the schema, then run:
+
+```bash
+npm run import:reservations
+```
+
+The import is safe to rerun; existing reservation IDs are skipped. Keep the
+local JSON file until you verify the import. Do not commit database credentials.
 
 ## Project structure
 
