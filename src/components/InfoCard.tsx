@@ -25,6 +25,22 @@ export default function InfoCard() {
       <p className="mt-2 text-muted">
         <a href={`mailto:${site.email}`}>{site.email}</a>
       </p>
+      <p className="mt-3 text-muted">
+        <a href={site.mapUrl} target="_blank" rel="noreferrer">
+          Open in Google Maps
+        </a>
+      </p>
+
+      <div className="mt-5 overflow-hidden rounded-2xl border border-line bg-surface-2">
+        <iframe
+          title={`${site.name} location map`}
+          src={site.mapEmbedUrl}
+          className="h-[220px] w-full border-0"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
+      </div>
     </div>
   );
 }

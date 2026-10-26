@@ -8,6 +8,11 @@ export const site = {
   address: "214 Foundry Lane, Lower Mills",
   city: "New York, NY 10013",
   instagram: "https://instagram.com",
+  mapQuery: "214 Foundry Lane, Lower Mills, New York, NY 10013",
+  mapUrl:
+    "https://www.google.com/maps/search/?api=1&query=214+Foundry+Lane+Lower+Mills+New+York+NY+10013",
+  mapEmbedUrl:
+    "https://www.google.com/maps?q=214+Foundry+Lane+Lower+Mills+New+York+NY+10013&z=14&output=embed",
 } as const;
 
 export const hours = [
