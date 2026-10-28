@@ -6,18 +6,21 @@ const reviews = [
       "Every detail feels intentional — the fire, the pacing, the cocktails. It felt like a real evening out, not just dinner.",
     author: "Dana R.",
     label: "Date night favorite",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80",
   },
   {
     quote:
       "The ribeye alone is worth the trip, but it&apos;s the room — the fire right there in the middle of it — that brings us back.",
     author: "A regular, most Friday nights",
     label: "Local favorite",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80",
   },
   {
     quote:
       "Warm service, beautiful plates, and a menu that actually makes you want to try everything. We stayed for dessert and never looked at our phones.",
     author: "Marcus T.",
     label: "Anniversary dinner",
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80",
   },
 ];
 
@@ -83,12 +86,18 @@ export default function Testimonial() {
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {reviews.map((review) => (
-            <Reveal key={review.author} as="article" className="rounded-[18px] border border-line bg-surface p-6 text-left shadow-[0_18px_40px_rgba(18,15,12,0.04)]">
-              <div className="text-[1rem] tracking-[0.18em] text-ember-2">★★★★★</div>
-              <p className="mt-4 text-[1.05rem] leading-[1.8] text-ink/85">&ldquo;{review.quote}&rdquo;</p>
-              <div className="mt-6 border-t border-line pt-4">
-                <p className="font-semibold text-ink">{review.author}</p>
-                <p className="mt-1 text-xs uppercase tracking-[0.12em] text-muted">{review.label}</p>
+            <Reveal key={review.author} as="article" className="group overflow-hidden rounded-[22px] border border-line bg-surface text-left shadow-[0_20px_45px_-28px_rgba(18,15,12,0.55)] transition duration-300 ease-brand hover:-translate-y-1 hover:border-ember/50">
+              <div className="relative overflow-hidden">
+                <img className="block aspect-[4/3] w-full object-cover transition duration-500 ease-brand group-hover:scale-[1.04]" src={review.image} alt={review.author} loading="lazy" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(15,11,9,0.46)] via-transparent to-transparent" />
+              </div>
+              <div className="p-6">
+                <div className="text-[0.9rem] tracking-[0.18em] text-ember-2">★★★★★</div>
+                <p className="mt-4 text-[1.04rem] leading-[1.8] text-ink/85">&ldquo;{review.quote}&rdquo;</p>
+                <div className="mt-6 border-t border-line pt-4">
+                  <p className="font-semibold text-ink">{review.author}</p>
+                  <p className="mt-1 text-[0.68rem] uppercase tracking-[0.12em] text-muted">{review.label}</p>
+                </div>
               </div>
             </Reveal>
           ))}
