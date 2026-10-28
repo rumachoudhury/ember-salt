@@ -6,7 +6,8 @@ const flame = (
 );
 
 export default function SignatureDishes() {
-  const signatures = menu.flatMap((s) => s.dishes.filter((d) => d.tag === "signature")).slice(0, 3);
+  const signatures = menu.flatMap((s) => s.dishes.filter((d) => d.tag === "signature"))
+    .slice(0, 4);
 
   return (
     <section className="scroll-mt-[90px] py-[clamp(4rem,9vw,6.5rem)]" id="signatures">
@@ -14,9 +15,9 @@ export default function SignatureDishes() {
         <Reveal as="div" className="mx-auto max-w-[56ch] text-center">
           <span className="inline-flex items-center gap-2 text-[0.8rem] font-bold tracking-[0.12em] text-ember-3 uppercase"><i className="size-[7px] rounded-full bg-ember-2" aria-hidden="true" />Fire-forged</span>
           <h2 className="mt-[0.85rem] font-serif text-[clamp(2rem,4.5vw,2.8rem)] font-semibold uppercase">From the hearth</h2>
-          <p className="mt-[0.9rem] text-muted">Three dishes that don&apos;t leave the menu, no matter the season.</p>
+          <p className="mt-[0.9rem] text-muted">Four dishes that define the table, season after season.</p>
         </Reveal>
-        <div className="mt-12 grid grid-cols-1 gap-5 min-[861px]:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-5 min-[760px]:grid-cols-2 min-[1100px]:grid-cols-4">
           {signatures.map((dish, i) => (
             <Reveal as="div" className="rounded-[18px] border border-line bg-surface p-7 transition duration-300 ease-brand hover:-translate-y-1 hover:border-ember/50" delay={i} key={dish.name}>
               <span className="mb-[1.1rem] grid size-[34px] place-items-center rounded-[9px] bg-ember/20" aria-hidden="true">{flame}</span>
