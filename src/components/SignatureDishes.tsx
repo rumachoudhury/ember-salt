@@ -16,13 +16,21 @@ export default function SignatureDishes() {
           <h2 className="mt-[0.85rem] font-serif text-[clamp(2rem,4.5vw,2.8rem)] font-semibold uppercase">From the hearth</h2>
           <p className="mt-[0.9rem] text-muted">Six dishes that define the table, season after season.</p>
         </Reveal>
-        <div className="mt-12 grid grid-cols-1 gap-5 min-[760px]:grid-cols-2 min-[1100px]:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-6 min-[760px]:grid-cols-2 min-[1100px]:grid-cols-3">
           {signatures.map((dish, i) => (
-            <Reveal as="div" className="rounded-[18px] border border-line bg-surface p-7 transition duration-300 ease-brand hover:-translate-y-1 hover:border-ember/50" delay={i} key={dish.name}>
-              <span className="mb-[1.1rem] grid size-[34px] place-items-center rounded-[9px] bg-ember/20" aria-hidden="true">{flame}</span>
-              <h3 className="font-serif text-[1.2rem] font-semibold">{dish.name}</h3>
-              <p className="mt-2 text-[0.95rem] leading-[1.55] text-muted">{dish.description}</p>
-              <div className="mt-4 font-serif text-[1.1rem] text-ember-2">{dish.price}</div>
+            <Reveal as="div" className="group overflow-hidden rounded-[22px] border border-line bg-surface shadow-[0_20px_50px_-28px_rgba(20,16,13,0.42)] transition duration-300 ease-brand hover:-translate-y-1 hover:border-ember/60" delay={i} key={dish.name}>
+              <div className="relative overflow-hidden">
+                <img className="block aspect-[16/11] w-full object-cover transition duration-500 ease-brand group-hover:scale-[1.04]" src={dish.image} alt={dish.name} loading="lazy" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(15,10,8,0.58)] via-transparent to-transparent" />
+                <span className="absolute left-4 top-4 grid size-[34px] place-items-center rounded-full bg-[rgba(15,10,8,0.55)] backdrop-blur-sm" aria-hidden="true">{flame}</span>
+              </div>
+              <div className="p-6">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-serif text-[1.28rem] font-semibold leading-tight">{dish.name}</h3>
+                  <div className="font-serif text-[1.05rem] text-ember-2">{dish.price}</div>
+                </div>
+                <p className="mt-3 text-[0.95rem] leading-[1.6] text-muted">{dish.description}</p>
+              </div>
             </Reveal>
           ))}
         </div>
