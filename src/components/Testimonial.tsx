@@ -6,7 +6,7 @@ const reviews = [
       "Every detail feels intentional — the fire, the pacing, the cocktails. It felt like a real evening out, not just dinner.",
     author: "Dana R.",
     label: "Date night favorite",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=80",
   },
   {
     quote:
@@ -86,12 +86,11 @@ export default function Testimonial() {
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {reviews.map((review) => (
-            <Reveal key={review.author} as="article" className="group overflow-hidden rounded-[22px] border border-line bg-surface text-left shadow-[0_20px_45px_-28px_rgba(18,15,12,0.55)] transition duration-300 ease-brand hover:-translate-y-1 hover:border-ember/50">
-              <div className="relative overflow-hidden">
-                <img className="block aspect-[4/3] w-full object-cover transition duration-500 ease-brand group-hover:scale-[1.04]" src={review.image} alt={review.author} loading="lazy" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(15,11,9,0.46)] via-transparent to-transparent" />
+            <Reveal key={review.author} as="article" className="group rounded-[22px] border border-line bg-surface p-4 text-left shadow-[0_20px_45px_-28px_rgba(18,15,12,0.55)] transition duration-300 ease-brand hover:-translate-y-1 hover:border-ember/50">
+              <div className="flex justify-center pb-2">
+                <img className="block size-[180px] rounded-full object-cover ring-8 ring-white" src={review.image} alt={review.author} loading="lazy" />
               </div>
-              <div className="p-6">
+              <div className="px-2 pb-2 pt-1">
                 <div className="text-[0.9rem] tracking-[0.18em] text-ember-2">★★★★★</div>
                 <p className="mt-4 text-[1.04rem] leading-[1.8] text-ink/85">&ldquo;{review.quote}&rdquo;</p>
                 <div className="mt-6 border-t border-line pt-4">
