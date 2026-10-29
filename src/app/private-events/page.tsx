@@ -8,8 +8,6 @@ export const metadata: Metadata = {
   description: `Plan a private gathering around the hearth at ${site.name}.`,
 };
 
-const eventEmail = `mailto:${site.email}?subject=${encodeURIComponent("Private event inquiry")}&body=${encodeURIComponent("Hello Ember & Salt,\n\nI'm interested in hosting a private event.\n\nPreferred date:\nEstimated guest count:\nOccasion:\nAdditional details:\n")}`;
-
 export default function PrivateEventsPage() {
   return (
     <main id="main" className="event-page">
@@ -39,7 +37,7 @@ export default function PrivateEventsPage() {
             <p>
               Tell us your preferred date, group size, and what you&apos;re celebrating. Our team will follow up to discuss availability and the right arrangements for your event.
             </p>
-            <a className="contact-link" href={eventEmail}>Inquire about an event</a>
+            <Link className="contact-link" href="/private-events/inquire">Inquire about an event</Link>
             <p className="event-alternative">
               Prefer to talk? <a href={`tel:${site.phone.replace(/[^\d]/g, "")}`}>{site.phone}</a>
             </p>

@@ -12,6 +12,7 @@ NEXT_PUBLIC_INSTAGRAM_URL=https://instagram.com/your-handle
 DATABASE_URL=postgres://user:password@host:5432/database?sslmode=require
 
 RESERVATION_EMAIL=reservations@your-domain.com
+PRIVATE_EVENT_EMAIL=events@your-domain.com
 RESERVATION_FROM="Ember & Salt <noreply@your-domain.com>"
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
@@ -60,6 +61,7 @@ Before announcing the site:
 - verify menu page loads
 - verify reservations page loads
 - submit a test reservation
+- submit a test private event inquiry
 - check that reservation is saved to Postgres
 - confirm email is sent if SMTP is configured
 - verify admin access is protected if enabled
