@@ -29,7 +29,7 @@ export default function CtaBand() {
             <p className="contact-eyebrow">Gather around the hearth</p>
             <h2>Private Events</h2>
             <p className="contact-description">Mark the occasion with a private dinner, a shared hearth menu, and a room of your own.</p>
-            <a className="contact-link" href={`mailto:${site.email}?subject=${encodeURIComponent("Private event inquiry")}`}>Plan an event</a>
+            <Link className="contact-link" href="/private-events">Plan an event</Link>
           </Reveal>
         </div>
 
