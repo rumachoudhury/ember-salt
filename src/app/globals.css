@@ -978,6 +978,14 @@ section {
   text-align: center;
   padding-block: clamp(3rem, 7vw, 5rem) 1.5rem;
 }
+.menu-intro {
+  max-width: 68ch;
+  margin: 1.25rem auto 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
+  line-height: 1.65;
+  text-wrap: balance;
+}
 .menu-jump {
   display: flex;
   flex-wrap: wrap;

@@ -18,7 +18,7 @@ export default function MenuPage() {
           <h1 className="mt-4 font-serif text-[clamp(2.2rem,5vw,3.2rem)] font-semibold">
             Short, seasonal, wood-fired.
           </h1>
-          <p className="mx-auto mt-4 max-w-[50ch] text-muted">
+          <p className="menu-intro">
             The menu changes with what&apos;s in season. This is what&apos;s on it this week.
           </p>
           <nav className="mt-7 flex flex-wrap justify-center gap-[0.6rem]" aria-label="Jump to section">
