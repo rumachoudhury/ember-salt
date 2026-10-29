@@ -17,17 +17,17 @@
 }
 
 :root {
-  --bg: #120d0b;
-  --bg-2: #1a120f;
-  --surface: #1f1713;
-  --surface-2: #251d18;
+  --bg: #181615;
+  --bg-2: #211d1b;
+  --surface: #282321;
+  --surface-2: #302a27;
   --ink: #f8efe7;
-  --muted: #cbb29a;
+  --muted: #c7b5a8;
   --line: rgba(248, 239, 231, 0.12);
-  --ember: #b86f32;
-  --ember-2: #dca066;
-  --ember-3: #f3d0a0;
-  --on-ember: #140f0d;
+  --ember: #a97358;
+  --ember-2: #c18b70;
+  --ember-3: #e0b99d;
+  --on-ember: #1b1715;
   --shadow: rgba(0, 0, 0, 0.6);
   --serif: "Fraunces", "Iowan Old Style", Georgia, serif;
   --sans: "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -232,6 +232,26 @@ section {
   filter: blur(10px);
   pointer-events: none;
 }
+.hero::after {
+  content: "";
+  position: absolute;
+  top: -62%;
+  right: 12%;
+  width: clamp(20rem, 42vw, 36rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, var(--ember-2) 0 3.5%, transparent 4%),
+    radial-gradient(circle at center, transparent 0 41%, rgba(193, 139, 112, 0.55) 41.3% 41.6%, transparent 42%),
+    repeating-conic-gradient(
+      from -5deg at center,
+      transparent 0deg 8deg,
+      rgba(193, 139, 112, 0.58) 8.15deg 8.5deg,
+      transparent 8.7deg 15deg
+    );
+  opacity: 0.34;
+  pointer-events: none;
+}
 .embers {
   position: absolute;
   inset: 0;
@@ -368,6 +388,12 @@ section {
 }
 
 @media (max-width: 860px) {
+  .hero::after {
+    top: -19rem;
+    right: -7rem;
+    width: 25rem;
+    opacity: 0.22;
+  }
   .hero-layout {
     grid-template-columns: 1fr;
   }
