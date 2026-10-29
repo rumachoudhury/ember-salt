@@ -3,6 +3,7 @@ import SignatureDishes from "@/components/SignatureDishes";
 import AboutStrip from "@/components/AboutStrip";
 import Testimonial from "@/components/Testimonial";
 import CtaBand from "@/components/CtaBand";
+import ImageSlideshow from "@/components/ImageSlideshow";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <AboutStrip />
       <Testimonial />
       <CtaBand />
+      <ImageSlideshow />
     </main>
   );
 }
