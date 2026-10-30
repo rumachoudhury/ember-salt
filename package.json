@@ -2,11 +2,11 @@
   "name": "ember-salt",
   "version": "1.0.0",
   "private": true,
-  "description": "Ember & Salt — modern wood-fired restaurant",
+  "description": "Ember & Salt \u2014 modern wood-fired restaurant",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node init && next dev",
+    "build": "node init && next build",
+    "start": "node init && next start",
     "typecheck": "tsc --noEmit",
     "test": "node --test --experimental-strip-types src/**/*.test.ts",
     "import:reservations": "node scripts/import-reservations.mjs"
