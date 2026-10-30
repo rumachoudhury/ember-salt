@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { site } from "@/data/site";
+import { sendEmail } from "@/lib/resend";
 
 export const runtime = "nodejs";
 
@@ -73,49 +74,39 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Please complete all required fields with valid information." }, { status: 400 });
     }
 
-    const smtpHost = process.env.SMTP_HOST;
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
-
-    if (!smtpHost || !smtpUser || !smtpPass) {
-      return NextResponse.json(
-        { error: "Event inquiries are temporarily unavailable. Please contact us by phone or email." },
-        { status: 503 },
-      );
-    }
-
-    const nodemailer = await import("nodemailer");
-    const transporter = nodemailer.default.createTransport({
-      host: smtpHost,
-      port: Number(process.env.SMTP_PORT ?? 587),
-      secure: Number(process.env.SMTP_PORT ?? 587) === 465,
-      auth: { user: smtpUser, pass: smtpPass },
-    });
-
     const fullName = `${inquiry.firstName} ${inquiry.lastName}`;
-    await transporter.sendMail({
-      from: process.env.RESERVATION_FROM ?? `"${site.name}" <${smtpUser}>`,
-      to: process.env.PRIVATE_EVENT_EMAIL ?? process.env.RESERVATION_EMAIL ?? site.email,
-      replyTo: inquiry.email,
-      subject: `Private event inquiry: ${fullName} (${inquiry.guestCount} guests)`,
-      text: [
-        "New private event inquiry",
-        "",
-        `Name: ${fullName}`,
-        `Email: ${inquiry.email}`,
-        `Phone: ${inquiry.phone}${inquiry.extension ? ` ext. ${inquiry.extension}` : ""}`,
-        `Preferred contact: ${inquiry.contactPreference}`,
-        `Company: ${inquiry.company}`,
-        `Event style: ${inquiry.eventStyle}`,
-        `Location: ${inquiry.location}`,
-        `Date: ${inquiry.eventDate}`,
-        `Time: ${inquiry.startTime}${inquiry.endTime ? `–${inquiry.endTime}` : ""}`,
-        `Guests: ${inquiry.guestCount}`,
-        `Event: ${inquiry.eventNature}`,
-        `Additional information: ${inquiry.details || "None"}`,
-        `Referral: ${inquiry.referral || "Not specified"}`,
-      ].join("\n"),
-    });
+    const eventInbox = process.env.PRIVATE_EVENT_EMAIL ?? process.env.RESERVATION_EMAIL ?? site.email;
+    const eventSummary = [
+      "New private event inquiry",
+      "",
+      `Name: ${fullName}`,
+      `Email: ${inquiry.email}`,
+      `Phone: ${inquiry.phone}${inquiry.extension ? ` ext. ${inquiry.extension}` : ""}`,
+      `Preferred contact: ${inquiry.contactPreference}`,
+      `Company: ${inquiry.company}`,
+      `Event style: ${inquiry.eventStyle || "Not specified"}`,
+      `Location: ${inquiry.location}`,
+      `Date: ${inquiry.eventDate}`,
+      `Time: ${inquiry.startTime || "Not specified"}${inquiry.endTime ? `–${inquiry.endTime}` : ""}`,
+      `Guests: ${inquiry.guestCount}`,
+      `Event: ${inquiry.eventNature}`,
+      `Additional information: ${inquiry.details || "None"}`,
+      `Referral: ${inquiry.referral || "Not specified"}`,
+    ].join("\n");
+
+    await Promise.all([
+      sendEmail({
+        to: eventInbox,
+        replyTo: inquiry.email,
+        subject: `Private event inquiry: ${fullName} (${inquiry.guestCount} guests)`,
+        text: eventSummary,
+      }),
+      sendEmail({
+        to: inquiry.email,
+        subject: `We received your event inquiry — ${site.name}`,
+        text: `Hi ${inquiry.firstName},\n\nThank you for reaching out about your event. We received your inquiry and our team will follow up to discuss availability and details. This message is an acknowledgement, not a confirmed booking.\n\n${site.name}`,
+      }),
+    ]);
 
     return NextResponse.json({ success: true, message: "Thank you. Your event inquiry has been sent, and our team will be in touch." });
   } catch (error) {

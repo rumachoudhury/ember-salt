@@ -13,11 +13,8 @@ DATABASE_URL=postgres://user:password@host:5432/database?sslmode=require
 
 RESERVATION_EMAIL=reservations@your-domain.com
 PRIVATE_EVENT_EMAIL=events@your-domain.com
-RESERVATION_FROM="Ember & Salt <noreply@your-domain.com>"
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your-email@gmail.com
-SMTP_PASS=your-app-password
+RESEND_API_KEY=re_your_api_key
+RESEND_FROM="Ember & Salt <reservations@your-verified-domain.com>"
 
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=your-strong-password
@@ -34,6 +31,7 @@ ADMIN_PASSWORD=your-strong-password
 ## 3. Postgres setup
 
 Create a managed PostgreSQL database and use the connection string in `DATABASE_URL`.
+Verify your sending domain in Resend, create an API key, and configure `RESEND_API_KEY` and `RESEND_FROM`. Reservation requests send an acknowledgement to the guest and a notification to `RESERVATION_EMAIL`; the acknowledgement is not a booking confirmation. Event inquiries send an acknowledgement to the guest and a notification to `PRIVATE_EVENT_EMAIL`.
 
 The app expects a table shaped like:
 

@@ -4,9 +4,9 @@
   "private": true,
   "description": "Ember & Salt \u2014 modern wood-fired restaurant",
   "scripts": {
-    "dev": "node init && next dev",
-    "build": "node init && next build",
-    "start": "node init && next start",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "typecheck": "tsc --noEmit",
     "test": "node --test --experimental-strip-types src/**/*.test.ts",
     "import:reservations": "node scripts/import-reservations.mjs"

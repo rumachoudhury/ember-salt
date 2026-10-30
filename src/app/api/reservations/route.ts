@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { site } from "@/data/site";
 import { saveReservation } from "@/lib/reservationStore";
+import { sendEmail } from "@/lib/resend";
 
 export const runtime = "nodejs";
 
@@ -28,34 +29,24 @@ export async function POST(request: Request) {
     }
 
     const reservation = saved.reservation;
-    const smtpHost = process.env.SMTP_HOST;
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
+    const reservationInbox =
+      process.env.RESERVATION_EMAIL ??
+      process.env.NEXT_PUBLIC_RESERVATION_EMAIL ??
+      "hello@emberandsalt.com";
 
-    if (smtpHost && smtpUser && smtpPass) {
-      const nodemailer = await import("nodemailer");
-      const transporter = nodemailer.default.createTransport({
-        host: smtpHost,
-        port: Number(process.env.SMTP_PORT ?? 587),
-        secure: Number(process.env.SMTP_PORT ?? 587) === 465,
-        auth: {
-          user: smtpUser,
-          pass: smtpPass,
-        },
-      });
-
-      await transporter.sendMail({
-        from: process.env.RESERVATION_FROM ?? `"${site.name}" <${smtpUser}>`,
-        to:
-          process.env.RESERVATION_EMAIL ??
-          process.env.NEXT_PUBLIC_RESERVATION_EMAIL ??
-          "hello@emberandsalt.com",
+    await Promise.all([
+      sendEmail({
+        to: reservationInbox,
+        replyTo: reservation.email,
         subject: `Reservation request: ${reservation.name} (${reservation.party} guests)`,
         text: `New reservation request\n\nName: ${reservation.name}\nEmail: ${reservation.email}\nDate: ${reservation.date}\nTime: ${reservation.time}\nParty size: ${reservation.party}\nNotes: ${reservation.notes || "None"}`,
-      });
-    } else {
-      console.info("Reservation request received:", reservation);
-    }
+      }),
+      sendEmail({
+        to: reservation.email,
+        subject: `We received your reservation request — ${site.name}`,
+        text: `Hi ${reservation.name.split(" ")[0]},\n\nWe received your request for ${reservation.party} ${reservation.party === 1 ? "guest" : "guests"} on ${reservation.date} at ${reservation.time}. This is a request, not yet a confirmed reservation. Our team will follow up by email to confirm availability.\n\nThank you,\n${site.name}`,
+      }),
+    ]);
 
     return NextResponse.json(
       {
