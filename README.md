@@ -51,23 +51,38 @@ Open `src/data/menu.ts`. Each section has an `id`, a `title`, and a `dishes` arr
 
 `tag` is optional: `"signature"` (shown on the home page too), `"new"`, or `"veg"`.
 
-### Reservation storage
+### Database and email
 
-Reservations are stored in managed PostgreSQL. Create a database with a provider
-such as Neon, Supabase, or a managed Postgres service, then set `DATABASE_URL`
-in `.env.local` and in your deployment environment. Use the provider's pooled
-connection URL for serverless hosting.
+Production reservations use **Neon PostgreSQL**. Create a Neon project and use
+its production branch. In Neon, copy the pooled connection string and configure
+it as `DATABASE_URL` in the Vercel project settings. For local development, set
+`DATABASE_URL` in `.env.local`; never commit real database credentials.
 
-Apply the schema in `database/schema.sql` using the provider's SQL editor or a
-PostgreSQL client before accepting bookings. To import existing local bookings
-from `data/reservations.json`, set `DATABASE_URL`, apply the schema, then run:
+Before accepting reservations, run `database/schema.sql` in the Neon SQL Editor
+for the production database. To import existing local bookings from
+`data/reservations.json`, set `DATABASE_URL`, apply the schema, then run:
 
 ```bash
 npm run import:reservations
 ```
 
 The import is safe to rerun; existing reservation IDs are skipped. Keep the
-local JSON file until you verify the import. Do not commit database credentials.
+local JSON file until you verify the import.
+
+Email is sent through **Resend**. Verify a sender domain in Resend, create an
+API key, then configure these Vercel environment variables:
+
+| Variable | Purpose | Vercel type |
+| --- | --- | --- |
+| `RESEND_API_KEY` | Resend API credential | Secret |
+| `RESEND_FROM` | Sender address on the verified domain | Config |
+| `RESERVATION_EMAIL` | Inbox for reservation notifications | Config |
+| `PRIVATE_EVENT_EMAIL` | Inbox for private-event notifications | Config |
+
+Reservation submissions send a request acknowledgement to the guest and a
+notification to the restaurant. The guest email is not a booking confirmation;
+staff must confirm availability. Event inquiries send a similar acknowledgement
+and staff notification. Do not put secret values in this file or commit them.
 
 ## Project structure
 
@@ -91,10 +106,15 @@ src/
     cssVars.ts          typed helper for CSS custom properties
 ```
 
-## Deploy
+## Deploy on Vercel
 
-Push the folder to GitHub, then import the repo on [Vercel](https://vercel.com)
-or [Netlify](https://netlify.com). Both detect Next.js automatically.
+The production site is deployed from the `main` branch on [Vercel](https://vercel.com).
+Import the GitHub repository, use the repository root as the project root, and
+add the production environment variables listed above in **Project Settings →
+Environment Variables**. Also configure `NEXT_PUBLIC_SITE_URL` with the public
+Vercel URL, `NEXT_PUBLIC_RESERVATION_EMAIL`, and `NEXT_PUBLIC_INSTAGRAM_URL` as
+needed. Redeploy after changing environment variables. Keep secret values only
+in Vercel, not in GitHub or this README.
 
 ## Notes
 

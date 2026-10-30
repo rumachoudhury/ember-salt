@@ -74,7 +74,10 @@ export default function ReservationForm() {
   };
 
   return (
-    <form className="rounded-[18px] border border-line bg-surface p-[clamp(1.75rem,4vw,2.5rem)]" onSubmit={onSubmit}>
+    <form
+      className="rounded-[18px] border border-line bg-surface p-[clamp(1.75rem,4vw,2.5rem)]"
+      onSubmit={onSubmit}
+    >
       <h2 className="font-serif text-2xl font-semibold">Request a table</h2>
       <p className="mt-2 text-[0.95rem] text-muted">
         We&apos;ll confirm by email within a few hours. For parties over 8, call
@@ -82,7 +85,12 @@ export default function ReservationForm() {
       </p>
 
       <div className="mt-6 flex flex-col gap-[0.45rem]">
-        <label className="text-[0.85rem] font-semibold text-muted" htmlFor="name">Full name</label>
+        <label
+          className="text-[0.85rem] font-semibold text-muted"
+          htmlFor="name"
+        >
+          Full name
+        </label>
         <input
           className="rounded-[10px] border border-line bg-bg-2 px-[0.9rem] py-3 text-[0.95rem] text-ink focus-visible:outline-2 focus-visible:outline-ember"
           id="name"
@@ -94,7 +102,12 @@ export default function ReservationForm() {
       </div>
 
       <div className="mt-6 flex flex-col gap-[0.45rem]">
-        <label className="text-[0.85rem] font-semibold text-muted" htmlFor="email">Email</label>
+        <label
+          className="text-[0.85rem] font-semibold text-muted"
+          htmlFor="email"
+        >
+          Email
+        </label>
         <input
           className="rounded-[10px] border border-line bg-bg-2 px-[0.9rem] py-3 text-[0.95rem] text-ink focus-visible:outline-2 focus-visible:outline-ember"
           id="email"
@@ -107,12 +120,35 @@ export default function ReservationForm() {
 
       <div className="mt-6 grid grid-cols-1 gap-4 min-[481px]:grid-cols-2">
         <div className="flex flex-col gap-[0.45rem]">
-          <label className="text-[0.85rem] font-semibold text-muted" htmlFor="date">Date</label>
-          <input className="rounded-[10px] border border-line bg-bg-2 px-[0.9rem] py-3 text-[0.95rem] text-ink focus-visible:outline-2 focus-visible:outline-ember" id="date" name="date" type="date" min={today} required />
+          <label
+            className="text-[0.85rem] font-semibold text-muted"
+            htmlFor="date"
+          >
+            Date
+          </label>
+          <input
+            className="rounded-[10px] border border-line bg-bg-2 px-[0.9rem] py-3 text-[0.95rem] text-ink focus-visible:outline-2 focus-visible:outline-ember"
+            id="date"
+            name="date"
+            type="date"
+            min={today}
+            required
+          />
         </div>
         <div className="flex flex-col gap-[0.45rem]">
-          <label className="text-[0.85rem] font-semibold text-muted" htmlFor="time">Time</label>
-          <select className="rounded-[10px] border border-line bg-bg-2 px-[0.9rem] py-3 text-[0.95rem] text-ink focus-visible:outline-2 focus-visible:outline-ember" id="time" name="time" required defaultValue="">
+          <label
+            className="text-[0.85rem] font-semibold text-muted"
+            htmlFor="time"
+          >
+            Time
+          </label>
+          <select
+            className="rounded-[10px] border border-line bg-bg-2 px-[0.9rem] py-3 text-[0.95rem] text-ink focus-visible:outline-2 focus-visible:outline-ember"
+            id="time"
+            name="time"
+            required
+            defaultValue=""
+          >
             <option value="" disabled>
               Select
             </option>
@@ -129,8 +165,19 @@ export default function ReservationForm() {
       </div>
 
       <div className="mt-6 flex flex-col gap-[0.45rem]">
-        <label className="text-[0.85rem] font-semibold text-muted" htmlFor="party">Party size</label>
-        <select className="rounded-[10px] border border-line bg-bg-2 px-[0.9rem] py-3 text-[0.95rem] text-ink focus-visible:outline-2 focus-visible:outline-ember" id="party" name="party" required defaultValue="">
+        <label
+          className="text-[0.85rem] font-semibold text-muted"
+          htmlFor="party"
+        >
+          Party size
+        </label>
+        <select
+          className="rounded-[10px] border border-line bg-bg-2 px-[0.9rem] py-3 text-[0.95rem] text-ink focus-visible:outline-2 focus-visible:outline-ember"
+          id="party"
+          name="party"
+          required
+          defaultValue=""
+        >
           <option value="" disabled>
             Select
           </option>
@@ -143,7 +190,12 @@ export default function ReservationForm() {
       </div>
 
       <div className="mt-6 flex flex-col gap-[0.45rem]">
-        <label className="text-[0.85rem] font-semibold text-muted" htmlFor="notes">Notes (optional)</label>
+        <label
+          className="text-[0.85rem] font-semibold text-muted"
+          htmlFor="notes"
+        >
+          Notes (optional)
+        </label>
         <textarea
           className="rounded-[10px] border border-line bg-bg-2 px-[0.9rem] py-3 text-[0.95rem] text-ink focus-visible:outline-2 focus-visible:outline-ember"
           id="notes"
@@ -153,10 +205,18 @@ export default function ReservationForm() {
         />
       </div>
 
-      <button className="mt-6 inline-flex items-center justify-center rounded-full border border-transparent bg-gradient-to-br from-ember-3 to-ember-2 px-6 py-[0.8rem] text-[0.95rem] font-bold tracking-[0.04em] text-[var(--on-ember)] uppercase shadow-[0_18px_32px_-20px_rgba(220,160,102,0.8)] transition hover:-translate-y-0.5 hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60" type="submit" disabled={isSubmitting}>
+      <button
+        className="mt-6 inline-flex items-center justify-center rounded-full border border-transparent bg-gradient-to-br from-ember-3 to-ember-2 px-6 py-[0.8rem] text-[0.95rem] font-bold tracking-[0.04em] text-[var(--on-ember)] uppercase shadow-[0_18px_32px_-20px_rgba(220,160,102,0.8)] transition hover:-translate-y-0.5 hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-60"
+        type="submit"
+        disabled={isSubmitting}
+      >
         {isSubmitting ? "Sending..." : "Request reservation"}
       </button>
-      <p className="mt-4 min-h-6 text-[0.9rem] text-ember-3" role="status" aria-live="polite">
+      <p
+        className="mt-4 min-h-6 text-[0.9rem] text-ember-3"
+        role="status"
+        aria-live="polite"
+      >
         {status}
       </p>
     </form>

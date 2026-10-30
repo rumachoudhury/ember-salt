@@ -10,7 +10,9 @@ export async function sendEmail({ to, subject, text, replyTo }: EmailMessage) {
   const from = process.env.RESEND_FROM;
 
   if (!apiKey || !from) {
-    throw new Error("RESEND_API_KEY and RESEND_FROM must be configured to send email.");
+    throw new Error(
+      "RESEND_API_KEY and RESEND_FROM must be configured to send email.",
+    );
   }
 
   const response = await fetch("https://api.resend.com/emails", {
@@ -30,6 +32,8 @@ export async function sendEmail({ to, subject, text, replyTo }: EmailMessage) {
 
   const result = (await response.json()) as { message?: string; name?: string };
   if (!response.ok) {
-    throw new Error(result.message ?? result.name ?? "Resend could not send the email.");
+    throw new Error(
+      result.message ?? result.name ?? "Resend could not send the email.",
+    );
   }
 }

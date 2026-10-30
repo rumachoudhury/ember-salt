@@ -29,7 +29,10 @@ export default function ImageSlideshow() {
   };
 
   return (
-    <section className="gallery-section" aria-label="A glimpse of Ember and Salt">
+    <section
+      className="gallery-section"
+      aria-label="A glimpse of Ember and Salt"
+    >
       <div className="gallery-wrap">
         <div className="gallery-heading">
           <span className="gallery-eyebrow">Around the table</span>
@@ -38,7 +41,11 @@ export default function ImageSlideshow() {
 
         <div className="gallery-carousel" aria-roledescription="carousel">
           <div className="gallery-photo" aria-live="polite" aria-atomic="true">
-            <img key={activeSlide.src} src={activeSlide.src} alt={activeSlide.alt} />
+            <img
+              key={activeSlide.src}
+              src={activeSlide.src}
+              alt={activeSlide.alt}
+            />
             <div className="gallery-caption">{activeSlide.caption}</div>
             <button
               className="gallery-arrow gallery-previous"
@@ -59,7 +66,10 @@ export default function ImageSlideshow() {
           </div>
 
           <div className="gallery-controls">
-            <span className="gallery-count">{activeIndex + 1} <span aria-hidden="true">/</span> {slides.length}</span>
+            <span className="gallery-count">
+              {activeIndex + 1} <span aria-hidden="true">/</span>{" "}
+              {slides.length}
+            </span>
             <div className="gallery-dots" aria-label="Choose a slide">
               {slides.map((slide, index) => (
                 <button

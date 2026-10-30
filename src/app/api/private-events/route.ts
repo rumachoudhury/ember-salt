@@ -25,9 +25,22 @@ const allowedStyles = new Set([
   "Pick-Up Catering",
   "Full-Service Catering",
 ]);
-const allowedLocations = new Set(["Main Dining Room", "Private Dining Room", "Entire Venue"]);
+const allowedLocations = new Set([
+  "Main Dining Room",
+  "Private Dining Room",
+  "Entire Venue",
+]);
 const allowedContactMethods = new Set(["Phone", "Email", "Text"]);
-const allowedReferrals = new Set(["", "EventUp", "Instagram", "Facebook", "Venues by Tripleseat", "Search Engine", "Email", "Other"]);
+const allowedReferrals = new Set([
+  "",
+  "EventUp",
+  "Instagram",
+  "Facebook",
+  "Venues by Tripleseat",
+  "Search Engine",
+  "Email",
+  "Other",
+]);
 
 function cleanText(value: unknown, maxLength: number): string {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
@@ -57,7 +70,9 @@ export async function POST(request: Request) {
 
     const missingField = requiredFields.find((field) => !inquiry[field]);
     const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inquiry.email);
-    const validDate = /^\d{4}-\d{2}-\d{2}$/.test(inquiry.eventDate) && !Number.isNaN(Date.parse(inquiry.eventDate));
+    const validDate =
+      /^\d{4}-\d{2}-\d{2}$/.test(inquiry.eventDate) &&
+      !Number.isNaN(Date.parse(inquiry.eventDate));
 
     if (
       missingField ||
@@ -71,11 +86,19 @@ export async function POST(request: Request) {
       !allowedContactMethods.has(inquiry.contactPreference) ||
       !allowedReferrals.has(inquiry.referral)
     ) {
-      return NextResponse.json({ error: "Please complete all required fields with valid information." }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: "Please complete all required fields with valid information.",
+        },
+        { status: 400 },
+      );
     }
 
     const fullName = `${inquiry.firstName} ${inquiry.lastName}`;
-    const eventInbox = process.env.PRIVATE_EVENT_EMAIL ?? process.env.RESERVATION_EMAIL ?? site.email;
+    const eventInbox =
+      process.env.PRIVATE_EVENT_EMAIL ??
+      process.env.RESERVATION_EMAIL ??
+      site.email;
     const eventSummary = [
       "New private event inquiry",
       "",
@@ -108,9 +131,19 @@ export async function POST(request: Request) {
       }),
     ]);
 
-    return NextResponse.json({ success: true, message: "Thank you. Your event inquiry has been sent, and our team will be in touch." });
+    return NextResponse.json({
+      success: true,
+      message:
+        "Thank you. Your event inquiry has been sent, and our team will be in touch.",
+    });
   } catch (error) {
     console.error("Private event inquiry failed:", error);
-    return NextResponse.json({ error: "Unable to send your inquiry right now. Please try again or contact us directly." }, { status: 500 });
+    return NextResponse.json(
+      {
+        error:
+          "Unable to send your inquiry right now. Please try again or contact us directly.",
+      },
+      { status: 500 },
+    );
   }
 }

@@ -44,8 +44,16 @@ html {
 body {
   margin: 0;
   background:
-    radial-gradient(circle at top left, rgba(220, 160, 102, 0.12), transparent 26%),
-    radial-gradient(circle at top right, rgba(184, 111, 50, 0.1), transparent 24%),
+    radial-gradient(
+      circle at top left,
+      rgba(220, 160, 102, 0.12),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(184, 111, 50, 0.1),
+      transparent 24%
+    ),
     var(--bg);
   color: var(--ink);
   font-family: var(--sans);
@@ -211,13 +219,15 @@ section {
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(18, 13, 11, 0.78), rgba(18, 13, 11, 0.46)),
-    url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+    url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80")
+      center/cover no-repeat;
   border-bottom: 1px solid var(--line);
 }
 .cta-bg {
   background:
     linear-gradient(135deg, rgba(90, 54, 32, 0.9), rgba(20, 15, 13, 0.9)),
-    url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=80") center/cover;
+    url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=80")
+      center/cover;
 }
 .hero::before {
   content: "";
@@ -242,7 +252,12 @@ section {
   border-radius: 50%;
   background:
     radial-gradient(circle at center, var(--ember-2) 0 3.5%, transparent 4%),
-    radial-gradient(circle at center, transparent 0 41%, rgba(193, 139, 112, 0.55) 41.3% 41.6%, transparent 42%),
+    radial-gradient(
+      circle at center,
+      transparent 0 41%,
+      rgba(193, 139, 112, 0.55) 41.3% 41.6%,
+      transparent 42%
+    ),
     repeating-conic-gradient(
       from -5deg at center,
       transparent 0deg 8deg,
@@ -609,7 +624,8 @@ section {
   padding: clamp(2.5rem, 6vw, 4rem);
   background:
     linear-gradient(135deg, rgba(90, 54, 32, 0.9), rgba(20, 15, 13, 0.9)),
-    url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=80") center/cover;
+    url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=80")
+      center/cover;
   border: 1px solid rgba(248, 239, 231, 0.08);
   text-align: center;
   box-shadow: 0 28px 64px rgba(0, 0, 0, 0.18);
@@ -691,7 +707,10 @@ section {
   font-style: italic;
   letter-spacing: 0.06em;
   text-decoration: none;
-  transition: color 0.25s, background-color 0.25s, transform 0.25s;
+  transition:
+    color 0.25s,
+    background-color 0.25s,
+    transform 0.25s;
 }
 .contact-link:hover {
   transform: translateY(-2px);
@@ -844,8 +863,14 @@ section {
   animation: gallery-image-enter 0.45s var(--ease) both;
 }
 @keyframes gallery-image-enter {
-  from { opacity: 0.45; transform: scale(1.015); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0.45;
+    transform: scale(1.015);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 .gallery-caption {
   position: absolute;
@@ -874,7 +899,10 @@ section {
   color: var(--ink);
   cursor: pointer;
   backdrop-filter: blur(8px);
-  transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    transform 0.2s;
 }
 .gallery-arrow span {
   margin-top: -0.15em;
@@ -887,8 +915,12 @@ section {
   border-color: var(--ember-2);
   background: rgba(24, 22, 21, 0.88);
 }
-.gallery-previous { left: clamp(0.75rem, 2.5vw, 2rem); }
-.gallery-next { right: clamp(0.75rem, 2.5vw, 2rem); }
+.gallery-previous {
+  left: clamp(0.75rem, 2.5vw, 2rem);
+}
+.gallery-next {
+  right: clamp(0.75rem, 2.5vw, 2rem);
+}
 .gallery-controls {
   display: grid;
   min-height: 3.75rem;
@@ -920,7 +952,9 @@ section {
   border-radius: 50%;
   background: color-mix(in srgb, var(--muted) 45%, transparent);
   cursor: pointer;
-  transition: width 0.2s, background-color 0.2s;
+  transition:
+    width 0.2s,
+    background-color 0.2s;
 }
 .gallery-dot.is-active {
   width: 22px;
@@ -1101,7 +1135,9 @@ section {
   letter-spacing: 0.04em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: transform 0.25s var(--ease), filter 0.25s;
+  transition:
+    transform 0.25s var(--ease),
+    filter 0.25s;
 }
 .inquiry-submit:hover:not(:disabled) {
   transform: translateY(-2px);
@@ -1203,7 +1239,9 @@ section {
   border: 1px solid var(--line);
   border-radius: 14px;
   background: var(--surface);
-  transition: transform 0.35s var(--ease), border-color 0.25s;
+  transition:
+    transform 0.35s var(--ease),
+    border-color 0.25s;
 }
 .menu-row:hover {
   transform: translateY(-4px);

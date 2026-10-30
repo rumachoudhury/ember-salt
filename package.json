@@ -2,7 +2,7 @@
   "name": "ember-salt",
   "version": "1.0.0",
   "private": true,
-  "description": "Ember & Salt \u2014 modern wood-fired restaurant",
+  "description": "Ember & Salt — modern wood-fired restaurant",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

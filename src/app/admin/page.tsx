@@ -12,20 +12,27 @@ export default async function AdminPage() {
   const reservations = await readReservations();
 
   return (
-    <main id="main" className="mx-auto max-w-[1120px] px-[clamp(1.25rem,5vw,3rem)] py-12">
+    <main
+      id="main"
+      className="mx-auto max-w-[1120px] px-[clamp(1.25rem,5vw,3rem)] py-12"
+    >
       <div className="mb-8 flex items-center justify-between gap-4">
         <div>
           <p className="inline-flex items-center gap-2 text-[0.8rem] font-bold tracking-[0.12em] text-ember-3 uppercase">
             <i className="size-[7px] rounded-full bg-ember-2" /> Admin
           </p>
-          <h1 className="mt-2 font-serif text-4xl font-semibold">Reservation dashboard</h1>
+          <h1 className="mt-2 font-serif text-4xl font-semibold">
+            Reservation dashboard
+          </h1>
         </div>
       </div>
 
       <section className="overflow-hidden rounded-[18px] border border-line bg-surface">
         <div className="flex items-center justify-between gap-4 border-b border-line px-6 py-5">
           <h2 className="font-serif text-xl font-semibold">Recent requests</h2>
-          <span className="rounded-full border border-line px-3 py-1 text-sm text-muted">{reservations.length} total</span>
+          <span className="rounded-full border border-line px-3 py-1 text-sm text-muted">
+            {reservations.length} total
+          </span>
         </div>
 
         {reservations.length === 0 ? (
@@ -55,7 +62,9 @@ export default async function AdminPage() {
                     <td className="px-4 py-3">{reservation.time}</td>
                     <td className="px-4 py-3">{reservation.party}</td>
                     <td className="px-4 py-3">{reservation.notes || "—"}</td>
-                    <td className="px-4 py-3">{new Date(reservation.receivedAt).toLocaleString()}</td>
+                    <td className="px-4 py-3">
+                      {new Date(reservation.receivedAt).toLocaleString()}
+                    </td>
                   </tr>
                 ))}
               </tbody>
